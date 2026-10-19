@@ -1,42 +1,54 @@
-> [!NOTE]  
+> [!NOTE]
 > The English translation for this exercise can be found in [this file](./readme.en.md).
 
 # Perintä ja rajapinnat
 
-Tämä repositorio sisältää joukon Java-harjoituksia, joiden avulla perehdyt perintään ja rajapintoihin.
+![Perintä ja rajapinnat: Product-yliluokka, sen aliluokat Vehicle, Apartment ja Ticket sekä MarkdownExport-rajapinta](img/chapters/inheritance.svg)
 
-Tehtävän yhteyteen suosittelemme seuraavia itseopiskelumateriaaleja:
+Tämä repositorio sisältää Java-harjoituksia, joiden avulla perehdyt perintään ja rajapintoihin. Suosittelemme seuraavia itseopiskelumateriaaleja, ja lisäksi sinun tulee etsiä tietoa itsenäisesti muistakin lähteistä:
 
 * [Objects, Classes, Interfaces, Packages, and Inheritance (dev.java)](https://dev.java/learn/oop/)
 * [Java Polymorphism Fully Explained In 7 Minutes (Coding with John, YouTube)](https://youtu.be/jhDUxynEQRI)
 * [Super Keyword in Java Full Tutorial - How to Use "super" (Coding with John, YouTube)](https://www.youtube.com/watch?v=Qb_NUn0TSAU)
 
-Lisäksi sinun tulee etsiä itsenäisesti tietoa erinäisistä lähteistä.
-
-
 ## Tehtävän aloittaminen
 
-Forkkaa ensin tämä repositorio omaan GitHub-repositorioosi GitHubin **Fork**-painikkeella. Harjoitus tehdään omassa forkissasi, joten kloonaa vasta sitten oma forkkisi omalle koneellesi (osoitteessa on oma GitHub-käyttäjätunnuksesi):
+Forkkaa ensin tämä repositorio omaan GitHub-repositorioosi GitHubin **Fork**-painikkeella ja kloonaa vasta sitten oma forkkisi koneellesi:
 
 ```sh
-git clone https://github.com/<oma-github-tunnuksesi>/<repositorion-nimi>.git
+git clone https://github.com/<oma-github-tunnuksesi>/5-inheritance-and-interfaces.git
 ```
 
-Kloonattuasi projektin omalle koneellesi, avaa se koodieditorissasi.
+Avaa kloonattu projekti koodieditorissasi.
+
+## Testaaminen
+
+Tehtävän osille on valmiit [JUnit](https://junit.org/)-yksikkötestit hakemistossa [src/test/java](./src/test/java/). Kunkin osan kohdalla kerrotaan, millä testiluokalla se arvioidaan. Voit ajaa testit koodieditorisi testaustyökalulla ([VS Code](https://code.visualstudio.com/docs/java/java-testing), [Eclipse](https://www.vogella.com/tutorials/JUnitEclipse/article.html)) tai [Gradlella](https://docs.gradle.org/current/userguide/java_testing.html), esimerkiksi:
+
+```
+./gradlew test --tests ProductTest        # unix
+.\gradlew.bat test --tests ProductTest    # windows
+```
+
+Lisää komennon loppuun `--info`, jos haluat tarkemmat tiedot epäonnistuneista testeistä. Testien tekniseen toteutukseen ei tarvitse perehtyä, ja voit kokeilla ratkaisuasi myös omalla `main`-metodilla. Saat kirjoittaa omia testejä lisää, mutta älä muuta tai poista valmiita testejä.
+
+Älä muuta valmiiden luokkien, metodien ja konstruktorien nimiä, parametreja tai paluuarvojen tyyppejä, sillä silloin testit eivät käänny. Saat tiedoston alkuperäisen version takaisin komennolla `git restore <tiedoston polku>` tai kurssijärjestelmän **Palauta lähtökoodi** -toiminnolla.
+
+## Palauttaminen ja pisteet
+
+Jokaisella tehtävän osalla on kurssijärjestelmässä (https://jtjuslin.kapsi.fi/java) oma sivunsa, jonka koodikentissä on osan koodipohja. Kopioi ratkaisusi koodikenttiin tai kirjoita se suoraan niihin. **Testaa ilman palautusta** ajaa osan testit tallentamatta pisteitä, ja **Lähetä** palauttaa ratkaisun. Jokainen testiluokka hyväksytään vain, jos sen kaikki testit menevät läpi, ja pisteet jaetaan hyväksyttyjen testiluokkien mukaan.
+
+**Pisteet kahdessa vaiheessa**
+
+1. Kun ratkaisusi menee läpi kurssijärjestelmässä, saat osasta **puolet pisteistä**.
+2. Pushaa lopuksi kaikki julkiseen GitHub-repositorioosi. Paina tämän jälkeen osan sivulla **Lähetä tarkistettavaksi** -nappia. Kun testit menevät läpi, saat osasta **täydet pisteet**. Repositorio saa jäädä julkiseksi.
+
+GitHubissa ei ole arvioivaa YAML-tehtävävirtaa (GitHub Actions -workflowta), eikä `git push` käynnistä arviointia. Kun painat **Lähetä tarkistettavaksi**, kurssijärjestelmän botti hakee koodisi repositoriostasi ja tarkistaa sen samoilla testeillä. Molemmat vaiheet pitää tehdä ennen luvun määräaikaa. Voit lähettää ratkaisusi niin monta kertaa kuin tarvitset, ja voimaan jää paras tulos.
 
 
-## Vastausten lähettäminen
+## Osa 1: perintä *(perusteet, 10 % + 10 %)*
 
-Tämän tehtävän ratkaisuja ei arvioi mikään GitHub Actions -tehtävävirta (YAML-workflow), eikä `git push` käynnistä arviointia. Arvioinnin tekee kurssijärjestelmä: lähetä ratkaisusi tehtävän sivulla kurssijärjestelmässä, jolloin koodisi käännetään ja sille ajetaan tehtävän JUnit-testit.
-
-Pushaa lopuksi kaikki julkiseen GitHub-repositorioosi ja paina tehtävän sivulla **Lähetä tarkistettavaksi** -nappia. Kurssijärjestelmän botti käy silloin hakemassa koodisi repositoriostasi ja tarkistaa sen samoilla testeillä.
-
-💡 *Voit lähettää ratkaisusi niin monta kertaa kuin on tarpeen luvun määräaikaan asti. Voimaan jää paras saamasi tulos.*
-
-
-### Osa 1: perintä *(perusteet, 10 % + 10 %)*
-
-Tämän tehtäväpohjan [inheritance.webshop](./src/main/java/inheritance/webshop/)-paketissa on neljä Java-luokkaa, joiden tarkoitus on mallintaa kuvitteellisessa web-pohjaisessa osto- ja myyntipalvelussa olevia tuotteita. Oletuksena kaikki tuotteet sisältävät tyypistä riippumatta [`Product`](./src/main/java/inheritance/webshop/Product.java)-luokassa määritellyt tiedot (title, description, price). [Ajoneuvoille](./src/main/java/inheritance/webshop/Vehicle.java), [asunnoille](./src/main/java/inheritance/webshop/Apartment.java) ja [pääsylipuille](./src/main/java/inheritance/webshop/Ticket.java) on omat luokkansa, jotka sisältävät juuri näille tuotteille ominaisia lisätietoja:
+Paketin [inheritance.webshop](./src/main/java/inheritance/webshop/) neljä luokkaa mallintavat kuvitteellisen verkkokaupan tuotteita. Kaikilla tuotteilla on [Product](./src/main/java/inheritance/webshop/Product.java)-luokassa määritellyt tiedot (title, description, price). [Ajoneuvoilla](./src/main/java/inheritance/webshop/Vehicle.java), [asunnoilla](./src/main/java/inheritance/webshop/Apartment.java) ja [pääsylipuilla](./src/main/java/inheritance/webshop/Ticket.java) on omat aliluokkansa, joissa on juuri niille ominaisia lisätietoja:
 
 ```mermaid
 classDiagram
@@ -78,62 +90,32 @@ classDiagram
   Product <|-- Ticket: Extends
 ```
 
-Tässä tehtävässä sinun tulee ensin toteuttaa [`Product`](./src/main/java/inheritance/webshop/Product.java)-luokka siinä olevien kommenttien mukaisesti. Kun olet saanut `Product`-luokan toteutettua ja se läpäisee luokalle kirjoitetut testit, toteuta [`Vehicle`](./src/main/java/inheritance/webshop/Vehicle.java)-luokka siihen kirjoitettujen kommenttien mukaisesti.
+Toteuta ensin `Product`-luokka sen kommenttien mukaisesti. Kun se toimii, toteuta `Vehicle`-luokka, joka perii `Product`-luokan. `Apartment`- ja `Ticket`-luokat ovat niin samankaltaisia kuin `Vehicle`, että niitä ei testata eikä arvioida: voit jatkaa perinnän harjoittelua niiden parissa itsenäisesti.
 
-Molemmille luokille on omat testit: [ProductTest](./src/test/java/inheritance/webshop/ProductTest.java) ja [VehicleTest](./src/test/java/inheritance/webshop/VehicleTest.java). Voit suorittaa testit koodieditorisi testaustyökalulla ([VS Code](https://code.visualstudio.com/docs/java/java-testing), [Eclipse](https://www.vogella.com/tutorials/JUnitEclipse/article.html)) tai [Gradle-automaatiotyökalulla](https://docs.gradle.org/current/userguide/java_testing.html):
-
-```sh
-./gradlew test --tests ProductTest      # unix
-.\gradlew.bat test --tests ProductTest  # windows
-```
-
-```sh
-./gradlew test --tests VehicleTest      # unix
-.\gradlew.bat test --tests VehicleTest  # windows
-```
-
-[`Apartment`](./src/main/java/inheritance/webshop/Apartment.java)- ja [`Ticket`](./src/main/java/inheritance/webshop/Ticket.java)-luokat löytyvät samasta hakemistosta ja voit jatkaa perinnän harjoittelua itsenäisesti niiden parissa. Näiden luokkien toteutus on `Vehicle`-luokan kanssa niin samankaltainen, ettei niille ole automaattisia testejä eikä niitä huomioida erikseen tehtävän arvioinnissa.
+Arvioinnissa ajetaan testiluokat [ProductTest](./src/test/java/inheritance/webshop/ProductTest.java) (puolet pisteistä) ja [VehicleTest](./src/test/java/inheritance/webshop/VehicleTest.java) (puolet pisteistä).
 
 
-### Osa 2: monimuotoisuus *(soveltava, 20 %)*
+## Osa 2: monimuotoisuus *(soveltava, 20 %)*
 
-Perinnän avulla toteuttamiesi aliluokkien olioita voidaan käyttää yliluokan olioiden paikalla esimerkiksi kokoelmissa tai metodien parametreina. Täydennä [`WebShop`](./src/main/java/inheritance/webshop/WebShop.java)-luokkaan metodit, joiden tarkoituksena on harjoitella sekä eri tyyppisten olioiden käyttämistä yhdessä, että opetella tarvittaessa tunnistamaan, minkä luokan oliosta kulloinkin on tosiasiassa kyse.
+Aliluokkien olioita voidaan käyttää yliluokan olioiden paikalla esimerkiksi kokoelmissa tai metodien parametreina. Täydennä [WebShop](./src/main/java/inheritance/webshop/WebShop.java)-luokan metodit, joissa harjoitellaan eri tyyppisten olioiden käyttämistä yhdessä ja sen tunnistamista, minkä luokan oliosta on kulloinkin kyse.
 
+Tämä osa käyttää osassa 1 toteuttamiasi `Product`- ja `Vehicle`-luokkia, joten varmista ensin, että ne toimivat. Kurssijärjestelmä tuo ne tähän osaan automaattisesti, kun avaat sen ensimmäisen kerran.
 
-Tämä osa tarkastetaan [`WebShopTest`](./src/test/java/inheritance/webshop/WebShopTest.java)-luokan avulla, jonka voit suorittaa koodieditorissasi tai Gradlen avulla:
-
-```sh
-./gradlew test --tests WebShopTest      # unix
-.\gradlew.bat test --tests WebShopTest  # windows
-```
-
-💡 *Tässä osassa hyödynnetään edellisessä osassa toteutettuja `Product`- sekä `Vehicle`-luokkia, joten varmista että edellinen osa toimii ennen tähän etenemistä.*
+Arvioinnissa ajetaan testiluokka [WebShopTest](./src/test/java/inheritance/webshop/WebShopTest.java).
 
 
-### Osa 3: Comparable-rajapinta *(perusteet, 20 %)*
+## Osa 3: Comparable-rajapinta *(perusteet, 20 %)*
 
-[Country.java](./src/main/java/interfaces/country/Country.java)-tiedostossa on valmiiksi toteutettu tyypillinen Java-luokka, jonka tarkoitus on mallintaa maita ja niiden väkilukuja. Jatkokehitä tätä luokkaa siten, että se toteuttaa `Comparable<Country>`-rajapinnan.
+[Country](./src/main/java/interfaces/country/Country.java)-luokka mallintaa maita ja niiden väkilukuja. Muuta luokka toteuttamaan Javan valmis [`Comparable<Country>`](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Comparable.html)-rajapinta ja toteuta sen ainoa metodi `compareTo` luokan kommenttien sääntöjen mukaisesti. Voit kokeilla ratkaisuasi valmiilla [CountryMain](./src/main/java/interfaces/country/CountryMain.java)-pääohjelmalla.
 
-`Comparable`-rajapinta [löytyy javasta valmiina](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Comparable.html) ja se sisältää vain yhden metodin: `compareTo`. Toteuta tämä metodi luokassa esitettyjen sääntöjen mukaisesti. Voit testata ratkaisuasi joko valmiin [`CountryMain`](./src/main/java/interfaces/country/CountryMain.java)-pääohjelmaluokan tai [`CountryTest`](./src/test/java/interfaces/country/CountryTest.java)-yksikkötestiluokan avulla:
+Arvioinnissa ajetaan testiluokka [CountryTest](./src/test/java/interfaces/country/CountryTest.java).
 
-```sh
-./gradlew test --tests CountryTest      # unix
-.\gradlew.bat test --tests CountryTest  # windows
-```
 
-### Osa 4: oman rajapinnan toteuttaminen *(soveltava, 10 % + 10 %)*
+## Osa 4: oman rajapinnan toteuttaminen *(soveltava, 10 % + 10 %)*
 
-**MarkdownExport-rajapinta**
+**MarkdownExport-rajapinta.** Määrittele tiedostoon [MarkdownExport.java](./src/main/java/interfaces/markdown/MarkdownExport.java) oma rajapinta `MarkdownExport`, jossa on yksi metodi: `exportMarkdown()`. Metodilla ei ole parametreja, ja se palauttaa merkkijonon. Rajapinnan toteuttavat luokat muodostavat metodilla oliosta [markdown](https://www.markdownguide.org/)-muotoisen esityksen esimerkiksi tiedostoon tallentamista varten. Markdown-syntaksia ei tarvitse tuntea, kun seuraat alla olevia esimerkkejä.
 
-Tehtävän tässä osassa sinun tulee toteuttaa itse oma rajapinta nimeltä `MarkdownExport`. Rajapinta toteutetaan tiedostoon [MarkdownExport.java](./src/main/java/interfaces/markdown/MarkdownExport.java). Määrittele tähän rajapintaan yksi metodi: `exportMarkdown()`. Metodi ei saa ottaa parametreja ja sen tulee palauttaa merkkijono.
-
-Rajapinnan tarkoituksena on määritellä sen toteuttaville luokille `exportMarkdown()`-metodi, joka muodostaa oliosta [markdown](https://www.markdownguide.org/)-muotoisen merkkijonoesityksen esimerkiksi tiedostoon tallentamista varten. Tehtävän ratkaisemiseksi sinun ei tarvitse tuntea Markdown-syntaksia, riittää että seuraat annettuja esimerkkejä.
-
-**Pizza-luokka**
-
-Kun olet määritellyt edellä mainitun rajapinnan, muokkaa tehtäväpohjan valmista [`Pizza`-luokkaa](./src/main/java/interfaces/markdown/Pizza.java) siten, että se toteuttaa kyseisen rajapinnan.
-
-Pizza-luokan `exportMarkdown()`-metodin palauttamassa merkkijonossa on oltava pizzan nimi otsikkona (`# nimi`) sekä lista täytteistä (`- täyte`). Merkkijonon lopussa on oltava pizzan hinta, esimerkiksi seuraavasti:
+**Pizza-luokka.** Muuta valmis [Pizza](./src/main/java/interfaces/markdown/Pizza.java)-luokka toteuttamaan rajapinta. Pizzan markdown-esityksessä on oltava nimi otsikkona (`# nimi`), täytteet listana (`- täyte`) ja lopussa hinta, esimerkiksi:
 
 ```md
 # Hawaiian
@@ -146,62 +128,32 @@ Toppings:
 Price: 10.90
 ```
 
-MarkdownExport-rajapinta sekä Pizza-luokka testataan valmiilla [`MarkdownExportTest`-testiluokalla](./src/test/java/interfaces/markdown/MarkdownExportTest.java):
+**Product-luokka.** Muuta lopuksi osan 1 [Product](./src/main/java/inheritance/webshop/Product.java)-luokka toteuttamaan rajapinta. Tuotteen markdown-esityksessä on oltava nimi, kuvaus ja hinta, mutta muuten muodon saa valita vapaasti. Koska `Product` on eri paketissa kuin rajapinta, lisää siihen rivi `import interfaces.markdown.MarkdownExport;`.
 
-```sh
-./gradlew test --tests MarkdownExportTest      # unix
-.\gradlew.bat test --tests MarkdownExportTest  # windows
-```
+💡 *Koska `Vehicle` perii `Product`-luokan, myös se toteuttaa rajapinnan automaattisesti. Voit halutessasi antaa ajoneuvoille oman `exportMarkdown`-toteutuksen.*
 
-**Product-luokka**
-
-Jatkokehitä vielä tämän tehtäväpaketin edellisessä osassa kehitettyä [`Product`-luokkaa](./src/main/java/inheritance/webshop/Product.java) siten, että myös se toteuttaa [`MarkdownExport`-rajapinnan](./src/main/java/interfaces/markdown/MarkdownExport.java). Tuotteiden osalta markdown-esityksessä täytyy olla tuotteen nimi, kuvaus ja hinta, mutta muuten voit määritellä merkkijonon muodon vapaasti.
-
-Koska `Product`-luokka sijaitsee eri paketissa kuin MarkdownExport-rajapinta, tulee siihen kirjoittaa `import`-komento: `import interfaces.markdown.MarkdownExport;`
-
-`Product`-luokan osalta tehtävä tarkastetaan erillisellä [`ProductMarkdownTest`-testiluokalla](./src/test/java/interfaces/markdown/ProductMarkdownTest.java):
-
-```sh
-./gradlew test --tests ProductMarkdownTest      # unix
-.\gradlew.bat test --tests ProductMarkdownTest  # windows
-```
-
-💡 *Huomaa, että koska `Vehicle`-luokka perii `Product`-luokan, myös `Vehicle` täyttää tämän rajapinnan "automaattisesti". Jos haluat, että ajoneuvoilla on erilainen markdown-esitys kuin muilla tuotteilla, voit vapaasti toteuttaa siihen erilaisen toteutuksen exportMarkdown-metodista.*
+Arvioinnissa ajetaan testiluokat [MarkdownExportTest](./src/test/java/interfaces/markdown/MarkdownExportTest.java) (rajapinta ja `Pizza`) ja [ProductMarkdownTest](./src/test/java/interfaces/markdown/ProductMarkdownTest.java) (`Product`).
 
 
-### Osa 5: "dependency injection" *(edistynyt, 20 %)*
+## Osa 5: "dependency injection" *(edistynyt, 20 %)*
 
-Viimeisenä osana tässä tehtäväpaketissa on perintää soveltava "dependency injection"-esimerkki:
+Viimeinen osa on perintää soveltava "dependency injection" -esimerkki:
 
 > *"In software engineering, dependency injection is a programming technique in which an object or function receives other objects or functions that it requires, as opposed to creating them internally. Dependency injection aims to separate the concerns of constructing objects and using them, leading to loosely coupled programs"*
 >
 > Dependency injection. Wikipedia. https://en.wikipedia.org/wiki/Dependency_injection
 
-Tehtävän viimeisen osan ratkaiseminen vaatii vain minimaalisen muutoksen lähdekoodiin. Pääpaino tässä osassa onkin siinä, että perehdyt annettuihin luokkiin ja niissä esitettyihin kommentteihin:
+Ratkaisu vaatii vain pienen muutoksen. Tärkeintä on perehtyä annettuihin luokkiin ja niiden kommentteihin:
 
-* [`Main`](./src/main/java/dependency_injection/Main.java)
+* [Main](./src/main/java/dependency_injection/Main.java): tehtävänanto on tämän luokan kommenteissa, ja tämä on ainoa luokka, jota muutetaan.
+* [Application](./src/main/java/dependency_injection/Application.java)
+* [PrinterWithTimestamp](./src/main/java/dependency_injection/PrinterWithTimestamp.java)
 
-  *Tehtävän keskeisin tehtävänanto löytyy tästä luokasta. Tämä on ainoa luokka, jota tässä osassa tulee muuttaa.*
+Muuta `Main`-luokkaa niin, että se luo `PrinterWithTimestamp`-olion, antaa sen uudelle `Application`-oliolle ja kutsuu tämän `run()`-metodia. Kokeile ohjelmaa suorittamalla `Main`-luokka koodieditorissasi tai komennolla `./gradlew run` (Windowsissa `.\gradlew.bat run`) ja tutki sen tulostetta.
 
-* [`Application`](./src/main/java/dependency_injection/Application.java)
-* [`PrinterWithTimestamp`](./src/main/java/dependency_injection/PrinterWithTimestamp.java)
-
-Koska tehtävässä ei juurikaan koodata, ei sille ole valmista yksikkötestiä. Varmista ohjelman ja tekemäsi muutoksen toimivuus suorittamalla [`Main`](./src/main/java/dependency_injection/Main.java)-pääohjelmaluokkaa ja tutustu ohjelman tulosteisiin. Tehtävä arvioidaan automaattisesti suorittamalla `Main`-luokka Gradle:n avulla ja tutkimalla sen tulosteita:
-
-```sh
-./gradlew run      # unix
-.\gradlew.bat run  # windows
-```
+Arvioinnissa ajetaan testiluokka `DependencyInjectionTest`, joka ajaa `Main`-luokan ja tarkistaa, että sovelluksen kaikki rivit tulostuvat aikaleiman kanssa. Testi ei ole tässä repositoriossa.
 
 
 ## Lisenssi ja tekijät
 
-Tämän tehtävän on kehittänyt Teemu Havulinna ja se on lisensoitu [Creative Commons BY-NC-SA -lisenssillä](https://creativecommons.org/licenses/by-nc-sa/4.0/).
-
-Tehtävänannon, lähdekoodien ja testien toteutuksessa on hyödynnetty ChatGPT 3.5 -kielimallia sekä GitHub copilot -tekoälyavustinta.
-
-## Ratkaisun tallentaminen
-
-Forkkaa tämä tehtäväpohja omaan GitHub-repositorioosi ja tallenna ratkaisusi omaan forkkiisi. Repositorio saa olla julkinen.
-
-Palauta ratkaisusi kurssijärjestelmään tehtävän sivulla.
+Tämän tehtävän ovat kehittäneet Teemu Havulinna ja Jukka Juslin, ja se on lisensoitu [Creative Commons BY-NC-SA -lisenssillä](https://creativecommons.org/licenses/by-nc-sa/4.0/). Tehtävänannon, lähdekoodien ja testien toteutuksessa on hyödynnetty ChatGPT 3.5 -kielimallia sekä GitHub Copilot -tekoälyavustinta.
