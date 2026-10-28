@@ -20,7 +20,7 @@ package inheritance.webshop;
  * Note that this class itself does not utilize inheritance, but it will
  * extended by other classes in the exercise.
  */
-public class Product {
+public class Product implements interfaces.markdown.MarkdownExport{
 
     private String title;
     private  String description;
@@ -65,4 +65,17 @@ public class Product {
         return "Product{title='" + title + "', description='" + description
                 + "', price=" + price + "}";
     }
+
+
+
+
+
+    @Override
+public String exportMarkdown() {
+    String text = "# " + title + System.lineSeparator();
+    text = text + description + System.lineSeparator();
+    text = text + "Price: " + price;
+
+    return text;
+}
 }
