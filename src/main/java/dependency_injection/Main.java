@@ -33,6 +33,12 @@ public class Main {
          */
         Application app = new Application(System.out);
         app.run();
+        PrinterWithTimestamp printer = new  PrinterWithTimestamp();
+        
+
+        Application app2 = new  Application(printer);
+        app2.run();
+
 
         /*
          * After running the code, try creating an Application and passing in an
