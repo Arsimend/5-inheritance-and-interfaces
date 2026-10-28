@@ -14,5 +14,12 @@ package inheritance.webshop;
  * feel that you have understood the concept of inheritance.
  */
 public class Ticket {
+    
+    private double ticketID;
+    private java.time.LocalDateTime LocalDateTime;
+    private String nimi;
+
+
+    
 
 }
